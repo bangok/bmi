@@ -1,0 +1,24 @@
+#端口号
+server:
+  port: 85
+
+spring:
+  datasource:
+    #    数据库用户名密码
+    username: root
+    password: 123456
+    #    数据库链接地址、数据库名字（我的是zcf）
+    url: jdbc:mysql://localhost:3306/bmi?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapping.xml
+  type-aliases-package: com.maamcare.bmi.po
+
+#showSql
+logging:
+  level:
+    com:
+      maamcare:
+        po:
+          dao ：debug
