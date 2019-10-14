@@ -11,7 +11,6 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private LoginHandlerInterceptor repeatInterceptor;
-
     /**
      * 全局拦截器
      * */
