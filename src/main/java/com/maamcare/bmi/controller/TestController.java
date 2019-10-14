@@ -4,9 +4,13 @@ package com.maamcare.bmi.controller;
 import com.maamcare.bmi.service.TestService;
 import com.maamcare.bmi.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 /**
  * Author：张昌飞
@@ -24,12 +28,24 @@ public class TestController {
     private TestService testService;
 
     @GetMapping("/all")
-    public Result test(){
+    public Result testDB(){
         return Result
                 .builder()
                 .status(1)
                 .err("{}")
                 .data(testService.getAllData())
+                .build();
+    }
+
+    @GetMapping("/date")
+    public Result testDatefomater(@DateTimeFormat(pattern="yyyy-MM-dd") Date date){
+        System.out.println(date.toString());
+
+        return Result
+                .builder()
+                .status(1)
+                .err("{}")
+                .data(date)
                 .build();
     }
 
