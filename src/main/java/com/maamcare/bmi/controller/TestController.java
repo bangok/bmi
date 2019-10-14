@@ -5,10 +5,7 @@ import com.maamcare.bmi.service.TestService;
 import com.maamcare.bmi.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -46,6 +43,18 @@ public class TestController {
                 .status(1)
                 .err("{}")
                 .data(date)
+                .build();
+    }
+
+    @PostMapping("/testPost")
+    public Result testPost(@RequestBody String info){
+        System.out.println(info);
+        System.out.println("获取到POST提交");
+        return Result
+                .builder()
+                .status(1)
+                .err("{}")
+                .data(info)
                 .build();
     }
 
