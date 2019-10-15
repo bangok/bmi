@@ -17,16 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-        Object user = request.getSession().getAttribute("loginUser");
-        if(user == null){
-            //用户未登录
-            try {
-                response.sendRedirect(request.getContextPath()+"/user/noLogin");
-            }catch (Exception e){
-                System.out.println(e);
-            }
-            return false;
-        }
+//        Object user = request.getSession().getAttribute("loginUser");
+//        if(user == null){
+//            //用户未登录
+//            try {
+//                response.sendRedirect(request.getContextPath()+"/user/noLogin");
+//            }catch (Exception e){
+//                System.out.println(e);
+//            }
+//            return false;
+//        }
         return true;
     }
 
