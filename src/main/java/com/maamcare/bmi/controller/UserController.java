@@ -2,12 +2,11 @@ package com.maamcare.bmi.controller;
 
 
 import com.maamcare.bmi.vo.Result;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.maamcare.bmi.vo.UserFormInfo;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/user")
@@ -20,8 +19,15 @@ public class UserController {
 
     @GetMapping("/login")
     public Result login(@RequestParam String a, HttpSession session){
-        System.out.println(a);
         session.setAttribute("loginUser",a);
         return Result.builder().status(0).err("用户已登录").data(a).build();
     }
+    @PostMapping("/register")
+    public Result register(@RequestBody UserFormInfo userFormInfo){
+        System.out.println(userFormInfo.toString());
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userid","119114");
+        return Result.builder().status(0).err("").data(map).build();
+    }
+
 }
