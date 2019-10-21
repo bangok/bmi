@@ -10,30 +10,34 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class RecordServiceImpl implements RecordService {
 
     @Autowired
     RecordMapper recordMapper;
 
+    /**
+     * 获取一段时间内的体重记录
+     * */
     @Override
     public List<Record> getRecordbYTimeSlot(TimeSlot timeSlot) {
-        System.out.println(timeSlot.toString());
         return recordMapper.getRecordbYTimeSlot(timeSlot);
     }
 
+    /**
+     * 增加一条体重记录
+     * */
     @Override
     public boolean addRecord(Record record) {
         return recordMapper.addRecord(record);
     }
 
+    /**
+     * 更新一条体重记录
+     * */
     @Override
     public boolean updateWeightById(Integer id, Integer weight) {
         return recordMapper.updateWeightById(id,weight);
-    }
-
-    @Override
-    public int count() {
-        return recordMapper.count();
     }
 }

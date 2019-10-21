@@ -95,4 +95,13 @@ public class UserController {
 
     }
 
+    @GetMapping("/updateHeight")
+    public Result updateHeight(@RequestParam Integer id,@RequestParam Integer height){
+        return Result.builder()
+                .status(1)
+                .err("")
+                .data(userService.updateHeight(id,height))
+                .build();
+    }
+
 }

@@ -10,5 +10,4 @@ public interface RecordService {
     public boolean addRecord(Record record);
     public boolean updateWeightById(Integer id,Integer weight);
 
-    int count();
 }

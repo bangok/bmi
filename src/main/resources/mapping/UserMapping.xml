@@ -21,4 +21,8 @@
         insert into user (username,password,height) values(#{username},#{password},#{height})
     </insert>
 
+    <update id="updateHeight"  parameterType="Integer">
+         update user SET height=#{height}
+         where id=#{id}
+    </update>
 </mapper>

@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService{
         }
         return dbuser.getId();
     }
+
+    @Override
+    public boolean updateHeight(Integer id, Integer height) {
+        return userMapper.updateHeight(id,height);
+    }
 }
