@@ -12,6 +12,10 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserMapper userMapper;
 
+    @Override
+    public User getUserInfoById(Integer id) {
+        return userMapper.getUserInfoById(id);
+    }
 
     @Override
     public Integer register(User user) throws Exception{

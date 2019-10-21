@@ -13,6 +13,10 @@
         select * from user where username = #{username}
     </select>
 
+    <select id="getUserInfoById" resultMap="BaseResultMap" parameterType="Integer">
+        select * from user where id = #{id}
+    </select>
+
     <insert id="addUser" parameterType="com.maamcare.bmi.po.User">
         insert into user (username,password,height) values(#{username},#{password},#{height})
     </insert>

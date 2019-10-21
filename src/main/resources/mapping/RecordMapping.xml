@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maamcare.bmi.dao.RecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.maamcare.bmi.po.Record">
+        <id column="id"  property="id"/>
+        <result column="userid"  property="userid"/>
+        <result column="weight"  property="weight"/>
+        <result column="recorddate"  property="date"/>
+    </resultMap>
+
+<!--    <select id="getRecordbYTimeSlot" resultMap="BaseResultMap" parameterType="com.maamcare.bmi.pojo.TimeSlot">-->
+<!--        select * from record where recorddate between #{startdate,jdbcType=DATE} and #{enddate,jdbcType=DATE}-->
+<!--        and userid = #{userid}-->
+<!--    </select>-->
+
+    <select id="getRecordbYTimeSlot" resultMap="BaseResultMap" parameterType="com.maamcare.bmi.pojo.TimeSlot">
+        select * from record where recorddate between '2019-10-10' and '2019-10-25'
+        and userid = 1
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from record
+
+    </select>
+
+    <insert id="addRecord" parameterType="com.maamcare.bmi.po.Record">
+        insert into record (userid,date,weight) values(#{userid},#{recorddate},#{weight})
+    </insert>
+
+    <update id="updateWeightById"  parameterType="Integer">
+         update record SET weight=#{1}
+         where id=#{0}
+    </update>
+</mapper>

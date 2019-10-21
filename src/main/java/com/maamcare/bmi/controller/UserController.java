@@ -6,7 +6,6 @@ import com.maamcare.bmi.service.UserService;
 import com.maamcare.bmi.vo.Result;
 import com.maamcare.bmi.vo.UserFormInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -24,6 +23,15 @@ public class UserController {
     @GetMapping("/noLogin")
     public Result noLogin(HttpSession session){
         return Result.builder().status(1).err("用户未登录").data(null).build();
+    }
+
+    @GetMapping("/getUserInfoById")
+    public Result getUserInfoById(@RequestParam Integer id){
+        return Result.builder()
+                .status(1)
+                .err("")
+                .data(userService.getUserInfoById(id))
+                .build();
     }
 
     @PostMapping("/login")

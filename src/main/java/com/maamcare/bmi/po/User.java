@@ -1,14 +1,9 @@
 package com.maamcare.bmi.po;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Builder
-@Setter
-@Getter
-@ToString
+@Data
 public class User {
     Integer id;
     String username;

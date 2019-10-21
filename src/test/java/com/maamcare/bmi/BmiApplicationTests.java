@@ -1,6 +1,9 @@
 package com.maamcare.bmi;
 
+import com.maamcare.bmi.po.Record;
 import com.maamcare.bmi.po.User;
+import com.maamcare.bmi.pojo.TimeSlot;
+import com.maamcare.bmi.service.RecordService;
 import com.maamcare.bmi.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 @RunWith(SpringRunner.class)
@@ -16,6 +23,8 @@ public class BmiApplicationTests {
 
     @Autowired
     UserService userService;
+    @Autowired
+    RecordService recordService;
 
     @Test
     public void contextLoads() {
@@ -42,5 +51,6 @@ public class BmiApplicationTests {
         }
         System.out.println("失败");
     }
+
 
 }
