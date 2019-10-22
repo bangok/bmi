@@ -1,5 +1,4 @@
-package com.maamcare.bmi.po;
-
+package com.maamcare.bmi.vo;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +9,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class Test {
-    public Integer id;
-    public String value;
+public class UserFormInfo {
+    String username;
+    String password;
+    Integer height;
 }

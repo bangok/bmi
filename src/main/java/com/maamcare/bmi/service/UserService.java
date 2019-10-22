@@ -1,8 +1,11 @@
 package com.maamcare.bmi.service;
 
-import org.apache.ibatis.annotations.Param;
+
+import com.maamcare.bmi.po.User;
 
 public interface UserService {
-    //根据用户id获取用户信息
-   void getInfoById(Integer userId);
+    public Integer register (User user) throws Exception;
+    public Integer login (User user) throws Exception;
+    public User getUserInfoById(Integer id);
+    public boolean updateHeight(Integer id,Integer height);
 }

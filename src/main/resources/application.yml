@@ -20,5 +20,5 @@ logging:
   level:
     com:
       maamcare:
-        po:
-          dao ：debug
+        bmi:
+          dao: debug

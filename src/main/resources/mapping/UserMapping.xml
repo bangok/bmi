@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maamcare.bmi.dao.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.maamcare.bmi.po.User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="height" jdbcType="INTEGER" property="height" />
+    </resultMap>
+
+    <select id="getUserInfoByUserame" resultMap="BaseResultMap" parameterType="String">
+        select * from user where username = #{username}
+    </select>
+
+    <select id="getUserInfoById" resultMap="BaseResultMap" parameterType="Integer">
+        select * from user where id = #{id}
+    </select>
+
+    <insert id="addUser" parameterType="com.maamcare.bmi.po.User">
+        insert into user (username,password,height) values(#{username},#{password},#{height})
+    </insert>
+
+    <update id="updateHeight"  parameterType="Integer">
+         update user SET height=#{height}
+         where id=#{id}
+    </update>
+</mapper>
