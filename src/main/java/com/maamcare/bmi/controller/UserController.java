@@ -1,6 +1,8 @@
 package com.maamcare.bmi.controller;
 
 
+import com.maamcare.bmi.po.User;
+import com.maamcare.bmi.service.UserService;
 import com.maamcare.bmi.vo.Result;
 import com.maamcare.bmi.vo.UserFormInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/getUserInfoById")
-    public Result getUserInfoById(@RequestParam Integer id){
+    public Result getUserInfoById(@RequestParam Integer id) throws Exception{
         return Result.builder()
                 .status(1)
                 .err("")

@@ -13,8 +13,13 @@ public class UserServiceImpl implements UserService{
     UserMapper userMapper;
 
     @Override
-    public User getUserInfoById(Integer id) {
-        return userMapper.getUserInfoById(id);
+    public User getUserInfoById(Integer id) throws Exception {
+        User dbuser = userMapper.getUserInfoById(id);
+        if(dbuser == null){
+            //用户不存在
+            throw new Exception("用户不存在");
+        }
+        return dbuser;
     }
 
     @Override
