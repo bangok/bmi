@@ -101,4 +101,10 @@ public class UserController {
         session.setAttribute("loginUser",a);
         return Result.builder().status(0).err("用户已登录").data(a).build();
     }
+    @GetMapping("/updateHeight")
+    public Result updateHeight(@RequestParam Integer id ,Integer height) {
+
+        return  Result.builder().status(1).err("").data(userService.updateHeight(id,height)).build();
+
+    }
 }
