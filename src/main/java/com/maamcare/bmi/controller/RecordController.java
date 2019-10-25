@@ -33,7 +33,7 @@ public class RecordController {
         TimeSlot timeSlot = new TimeSlot(userid,sdf.format(startdate), sdf.format(enddate));
         System.out.println(timeSlot.toString());
         List<Record> recordList = recordService.getRecordbYTimeSlot(timeSlot);
-        return Result.builder().status(1).err("").data(recordList).build();
+        return Result.builder().status(1).err("{code:0,msg:null}").data(recordList).build();
     }
 
     @GetMapping("/addRecord")
@@ -47,7 +47,7 @@ public class RecordController {
         record.setWeight(weight);
         record.setRecord_date(sdf.format(record_date));
         System.out.println(record.toString());
-        return Result.builder().status(1).err("").data(recordService.addRecord(record)).build();
+        return Result.builder().status(1).err("{code:0,msg:null}").data(recordService.addRecord(record)).build();
 
     }
 
@@ -55,7 +55,7 @@ public class RecordController {
     public Result updateWeightById(@RequestParam  Integer id,
                                    @RequestParam  Integer weight) {
 
-        return Result.builder().status(1).err("").data(recordService.updateWeightById(id,weight)).build();
+        return Result.builder().status(1).err("{code:0,msg:null}").data(recordService.updateWeightById(id,weight)).build();
     }
 
 }

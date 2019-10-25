@@ -22,14 +22,14 @@ public class UserController {
 
     @GetMapping("/noLogin")
     public Result noLogin(HttpSession session){
-        return Result.builder().status(1).err("用户未登录").data(null).build();
+        return Result.builder().status(0).err("{code:1,msg:用户未登录}").data(null).build();
     }
 
     @GetMapping("/getUserInfoById")
     public Result getUserInfoById(@RequestParam Integer id) throws Exception{
         return Result.builder()
                 .status(1)
-                .err("")
+                .err("{code:0,msg:null}")
                 .data(userService.getUserInfoById(id))
                 .build();
     }
@@ -59,7 +59,7 @@ public class UserController {
         map.put("userid",userid);
         return Result.builder()
                 .status(1)
-                .err("")
+                .err("{code:0,msg:null}")
                 .data(map)
                 .build();
     }
@@ -89,7 +89,7 @@ public class UserController {
         map.put("userid",userid);
         return Result.builder()
                 .status(1)
-                .err("")
+                .err("{code:0,msg:null}")
                 .data(map)
                 .build();
 
@@ -99,12 +99,12 @@ public class UserController {
     public Result login(@RequestParam String a, HttpSession session){
         System.out.println(a);
         session.setAttribute("loginUser",a);
-        return Result.builder().status(0).err("用户已登录").data(a).build();
+        return Result.builder().status(1).err("{code:0,msg:用户已登录}").data(a).build();
     }
     @GetMapping("/updateHeight")
     public Result updateHeight(@RequestParam Integer id ,Integer height) {
 
-        return  Result.builder().status(1).err("").data(userService.updateHeight(id,height)).build();
+        return  Result.builder().status(1).err("{code:0,msg:null}").data(userService.updateHeight(id,height)).build();
 
     }
 }

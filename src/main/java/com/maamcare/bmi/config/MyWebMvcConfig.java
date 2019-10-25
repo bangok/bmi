@@ -14,11 +14,11 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
     /**
      * 全局拦截器
      * */
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(repeatInterceptor).addPathPatterns("/**")
-//                .excludePathPatterns("/user/login","/user/noLogin");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(repeatInterceptor).addPathPatterns("/**")
+                .excludePathPatterns("/user/login","/user/noLogin","/user/register");
+    }
 
 
 }
