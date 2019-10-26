@@ -5,6 +5,7 @@ import com.maamcare.bmi.po.User;
 import com.maamcare.bmi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional(rollbackFor=Exception.class) //加入事务回滚，否则并发有同步BUG
     public Integer register(User user) throws Exception{
 
         String username = user.getUsername();

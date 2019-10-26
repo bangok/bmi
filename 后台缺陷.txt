@@ -1,0 +1,12 @@
+1.LOG日志
+2.通用、TKmapper
+3.Redis
+4.JWT加密
+5.controller层没有处理返回逻辑，没有做数据校验
+
+6.数据库没有建立索引（索引可不可以和列同名？）
+7.service没有加事务（insert）
+8.查询的时候，where条件后面必须是int，这样并发高
+9.没有使用token机制做权限拦截，使用session非常消耗性能
+
+进阶：拆表、索引查询优化、查询String优化（使用hash算法转换为int）
