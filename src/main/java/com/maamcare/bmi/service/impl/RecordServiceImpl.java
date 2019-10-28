@@ -29,8 +29,16 @@ public class RecordServiceImpl implements RecordService {
      * 增加一条体重记录
      * */
     @Override
-    public boolean addRecord(Record record) {
-        return recordMapper.addRecord(record);
+    public boolean addRecord(Record record)throws Exception{
+        List<Record> list = recordMapper.getRecordbYUseridAndDate(record.getRecord_date(),record.getUserid());
+        if(list.size()!=0){
+            throw new Exception("用户的该天记录已存在，不能重复添加");
+        }
+        boolean isSuc = recordMapper.addRecord(record);
+        if(!isSuc){
+            throw new Exception("增加体重记录失败");
+        }
+        return true;
     }
 
     /**

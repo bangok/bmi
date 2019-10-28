@@ -8,9 +8,9 @@ import com.maamcare.bmi.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -28,34 +28,115 @@ public class RecordController {
     public Result getRecordbYTimeSlot(@RequestParam  Integer userid,
                                       @RequestParam  @DateTimeFormat(pattern="yyyy-MM-dd") Date startdate,
                                       @RequestParam  @DateTimeFormat(pattern="yyyy-MM-dd") Date enddate) {
+        //数据校验
+        HashMap<Integer,String> checkMap = new HashMap<>();
+        if(userid<0){
+            checkMap.put(1,"用户id不允许为负");
+            return Result.builder()
+                    .status(0)
+                    .err(checkMap)
+                    .data(null)
+                    .build();
+        }
+        if(startdate.getTime()>enddate.getTime()){
+            checkMap.put(2,"开始时间不能大于结束时间");
+            return Result.builder()
+                    .status(0)
+                    .err(checkMap)
+                    .data(null)
+                    .build();
+        }
         //注意：如果使用的是java.utill.date，那么需要格式转换字符串，如果使用java.sql.date则可以直接使用.toString()
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         TimeSlot timeSlot = new TimeSlot(userid,sdf.format(startdate), sdf.format(enddate));
-        System.out.println(timeSlot.toString());
         List<Record> recordList = recordService.getRecordbYTimeSlot(timeSlot);
-        return Result.builder().status(1).err("{code:0,msg:null}").data(recordList).build();
+        return Result.builder()
+                .status(1)
+                .err(null)
+                .data(recordList)
+                .build();
     }
 
     @GetMapping("/addRecord")
     public Result addRecord(@RequestParam  Integer userid,
                                       @RequestParam  Integer weight,
                                       @RequestParam  @DateTimeFormat(pattern="yyyy-MM-dd") Date record_date) {
-
+        HashMap<Integer,String> checkMap = new HashMap<>();
+        if(userid<0){
+            checkMap.put(1,"用户id不允许为负");
+            return Result.builder()
+                    .status(0)
+                    .err(checkMap)
+                    .data(null)
+                    .build();
+        }
+        if(weight<0){
+            checkMap.put(2,"体重不允许为负");
+            return Result.builder()
+                    .status(0)
+                    .err(checkMap)
+                    .data(null)
+                    .build();
+        }
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Record record = new Record();
         record.setUserid(userid);
         record.setWeight(weight);
         record.setRecord_date(sdf.format(record_date));
-        System.out.println(record.toString());
-        return Result.builder().status(1).err("{code:0,msg:null}").data(recordService.addRecord(record)).build();
+        try {
+            recordService.addRecord(record);
+            return Result.builder()
+                    .status(1)
+                    .err(null)
+                    .data(null)
+                    .build();
+        } catch (Exception e) {
+            HashMap<Integer,String> errMap = new HashMap<>();
+            errMap.put(3,e.getMessage());
+            return Result.builder()
+                    .status(0)
+                    .err(errMap)
+                    .data(null)
+                    .build();
+        }
 
     }
 
     @GetMapping("/updateWeightById")
     public Result updateWeightById(@RequestParam  Integer id,
                                    @RequestParam  Integer weight) {
-
-        return Result.builder().status(1).err("{code:0,msg:null}").data(recordService.updateWeightById(id,weight)).build();
+        HashMap<Integer,String> checkMap = new HashMap<>();
+        if(id<0){
+            checkMap.put(1,"id不允许为负数");
+            return Result.builder()
+                    .status(0)
+                    .err(checkMap)
+                    .data(null)
+                    .build();
+        }
+        if(weight<0){
+            checkMap.put(2,"体重不允许为负数");
+            return Result.builder()
+                    .status(0)
+                    .err(checkMap)
+                    .data(null)
+                    .build();
+        }
+        try {
+            return Result.builder()
+                    .status(1)
+                    .err(null)
+                    .data(recordService.updateWeightById(id,weight))
+                    .build();
+        } catch (Exception e) {
+            HashMap<Integer,String> errMap = new HashMap<>();
+            errMap.put(3,e.getMessage());
+            return Result.builder()
+                    .status(0)
+                    .err(errMap)
+                    .data(null)
+                    .build();
+        }
     }
 
 }

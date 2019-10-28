@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RecordService {
     public List<Record> getRecordbYTimeSlot(TimeSlot timeSlot);
-    public boolean addRecord(Record record);
-    public boolean updateWeightById(Integer id,Integer weight);
+    public boolean addRecord(Record record) throws Exception;
+    public boolean updateWeightById(Integer id,Integer weight)throws Exception;
 
 }

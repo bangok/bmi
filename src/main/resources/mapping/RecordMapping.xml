@@ -23,4 +23,9 @@
          where id=#{id}
     </update>
 
+    <select id="getRecordbYUseridAndDate" resultMap="BaseResultMap">
+        select * from record where record_date = #{record_date}
+        and userid = #{userid}
+    </select>
+
 </mapper>

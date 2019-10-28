@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Map;
+
 @Builder
 @Setter
 @Getter
 @ToString
 public class Result {
     public Integer status;
-    public String err;
+    public Map err;
     public Object data;
 }

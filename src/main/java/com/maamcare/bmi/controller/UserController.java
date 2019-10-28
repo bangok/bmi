@@ -1,15 +1,16 @@
 package com.maamcare.bmi.controller;
 
 
+import com.maamcare.bmi.component.TestComponent;
 import com.maamcare.bmi.po.User;
 import com.maamcare.bmi.service.UserService;
 import com.maamcare.bmi.vo.Result;
 import com.maamcare.bmi.vo.UserFormInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -17,29 +18,61 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    TestComponent testComponent;
 
     //@DateTimeFormat(pattern="yyyy-MM-dd")获取格式化日期数据
 
     @GetMapping("/noLogin")
     public Result noLogin(HttpSession session){
-        return Result.builder().status(0).err("{code:1,msg:用户未登录}").data(null).build();
+        Map<Integer,String> map = new HashMap();
+        map.put(0,"用户未登录");
+        return Result.builder().status(0).err(map).data(null).build();
     }
 
     @GetMapping("/getUserInfoById")
     public Result getUserInfoById(@RequestParam Integer id) throws Exception{
+        Map<Integer,String> checkmap= new HashMap<>();
+        if(id<0){
+            checkmap.put(1,"id不允许为负");
+            return Result.builder()
+                    .status(0)
+                    .err(checkmap)
+                    .data(null)
+                    .build();
+        }
+        User user = null;
+        try {
+            user = userService.getUserInfoById(id);
+        } catch (Exception e) {
+            Map<Integer,String> errMap = new HashMap();
+            errMap.put(2,e.getMessage());
+            return Result.builder()
+                    .status(0)
+                    .err(errMap)
+                    .data(null)
+                    .build();
+        }
         return Result.builder()
                 .status(1)
-                .err("{code:0,msg:null}")
-                .data(userService.getUserInfoById(id))
+                .err(null)
+                .data(user)
                 .build();
     }
 
     @PostMapping("/login")
     public Result login(@RequestBody UserFormInfo userFormInfo, HttpSession session){
-        System.out.println(userFormInfo.toString());
-
+        Map<Integer,String> map= new HashMap<>();
+        map= testComponent.testLogin(userFormInfo.getUsername(),userFormInfo.getPassword());
         Integer userid = null;
-
+        //校验数据合法性
+        if(map.get(0)==null){
+            return Result.builder()
+                    .status(0)
+                    .err(map)
+                    .data(null)
+                    .build();
+        }
         try {
             userid =userService.login(User.builder()
                             .username(userFormInfo.getUsername())
@@ -47,26 +80,37 @@ public class UserController {
                             .build());
         } catch (Exception e) {
             //登录失败
+            HashMap<Integer, String> errMap = new HashMap<>();
+            errMap.put(7,e.getMessage());
             return Result.builder()
                     .status(0)
-                    .err(e.getMessage())
+                    .err(errMap)
                     .data(null)
                     .build();
         }
         //登录成功，保存到session中
         session.setAttribute("loginUser",userFormInfo.getUsername());
-        HashMap<String, Integer> map = new HashMap<>();
-        map.put("userid",userid);
+        HashMap<String, Integer> resmap = new HashMap<>();
+        resmap.put("userid",userid);
         return Result.builder()
                 .status(1)
-                .err("{code:0,msg:null}")
-                .data(map)
+                .err(map)
+                .data(resmap)
                 .build();
     }
 
     @PostMapping("/register")
     public Result register(@RequestBody UserFormInfo userFormInfo,HttpSession session){
-        System.out.println(userFormInfo.toString());
+        Map<Integer,String> map= new HashMap<>();
+        map= testComponent.testRegister(userFormInfo.getUsername(),userFormInfo.getPassword(),userFormInfo.getHeight());
+        //校验数据合法性
+        if(map.get(0)==null){
+            return Result.builder()
+                    .status(0)
+                    .err(map)
+                    .data(null)
+                    .build();
+        }
         Integer userid = null;
         try {
             userid =userService.register(User.builder()
@@ -76,35 +120,52 @@ public class UserController {
                                 .build());
         } catch (Exception e) {
             //注册失败
+            HashMap<Integer, String> errMap = new HashMap<>();
+            errMap.put(9,e.getMessage());
             return Result.builder()
                     .status(0)
-                    .err(e.getMessage())
+                    .err(errMap)
                     .data(null)
                     .build();
         }
         //注册成功，保存到session中
         session.setAttribute("loginUser",userFormInfo.getUsername());
         //返回userid给前端
-        HashMap<String, Integer> map = new HashMap<>();
-        map.put("userid",userid);
+        HashMap<String, Integer> resMap = new HashMap<>();
+        resMap.put("userid",userid);
         return Result.builder()
                 .status(1)
-                .err("{code:0,msg:null}")
-                .data(map)
+                .err(map)
+                .data(resMap)
                 .build();
 
     }
 
-    @GetMapping("/login")
-    public Result login(@RequestParam String a, HttpSession session){
-        System.out.println(a);
-        session.setAttribute("loginUser",a);
-        return Result.builder().status(1).err("{code:0,msg:用户已登录}").data(a).build();
-    }
     @GetMapping("/updateHeight")
-    public Result updateHeight(@RequestParam Integer id ,Integer height) {
-
-        return  Result.builder().status(1).err("{code:0,msg:null}").data(userService.updateHeight(id,height)).build();
+    public Result updateHeight(@RequestParam Integer id ,@RequestParam Integer height){
+        Map<Integer,String> checkMap= new HashMap<>();
+        if(height<0){
+            checkMap.put(1,"身高不允许为负数");
+            return  Result.builder()
+                    .status(0)
+                    .err(checkMap)
+                    .data(null)
+                    .build();
+        }
+        boolean isSuc = userService.updateHeight(id,height);
+        if(!isSuc){
+            checkMap.put(2,"更新身高失败");
+            return  Result.builder()
+                    .status(0)
+                    .err(checkMap)
+                    .data(null)
+                    .build();
+        }
+        return  Result.builder()
+                .status(1)
+                .err(checkMap)
+                .data(null)
+                .build();
 
     }
 }

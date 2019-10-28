@@ -14,4 +14,5 @@ public interface RecordMapper {
     public List<Record> getRecordbYTimeSlot(TimeSlot timeSlot);
     public boolean addRecord(Record record);
     public boolean updateWeightById(@Param(value = "id") Integer id,@Param(value = "weight") Integer weight);
+    public List<Record> getRecordbYUseridAndDate(@Param(value = "record_date") String record_date,@Param(value = "userid") Integer userid);
 }
