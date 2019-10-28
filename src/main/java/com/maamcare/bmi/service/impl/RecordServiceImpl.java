@@ -7,6 +7,7 @@ import com.maamcare.bmi.pojo.TimeSlot;
 import com.maamcare.bmi.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class RecordServiceImpl implements RecordService {
      * 增加一条体重记录
      * */
     @Override
+    @Transactional(rollbackFor=Exception.class) //加入事务回滚，否则并发有同步BUG
     public boolean addRecord(Record record)throws Exception{
         List<Record> list = recordMapper.getRecordbYUseridAndDate(record.getRecord_date(),record.getUserid());
         if(list.size()!=0){
