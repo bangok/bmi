@@ -48,7 +48,7 @@ public class UserController {
             user = userService.getUserInfoById(id);
         } catch (Exception e) {
             Map<String,String> errMap = new HashMap();
-            errMap.put("code","1");
+            errMap.put("code","-1");
             errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)
@@ -84,7 +84,7 @@ public class UserController {
         } catch (Exception e) {
             //登录失败
             HashMap<String, String> errMap = new HashMap<>();
-            errMap.put("code","7");
+            errMap.put("code","-1");
             errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)
@@ -125,7 +125,7 @@ public class UserController {
         } catch (Exception e) {
             //注册失败
             HashMap<String, String> errMap = new HashMap<>();
-            errMap.put("code","9");
+            errMap.put("code","-1");
             errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)

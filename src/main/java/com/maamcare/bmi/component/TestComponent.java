@@ -50,13 +50,18 @@ public class TestComponent {
             return map;
         }
         if(password.equals("")){
-            map.put("code","6");
+            map.put("code","5");
             map.put("msg","密码为空");
             return map;
         }
         if(password.length()!=6){
-            map.put("code","7");
+            map.put("code","6");
             map.put("msg","密码长度必须为6");
+            return map;
+        }
+        if(height<0){
+            map.put("code","7");
+            map.put("msg","身高必须为正整数");
             return map;
         }
         map.put("code","0");
@@ -96,12 +101,12 @@ public class TestComponent {
             return map;
         }
         if(password.equals("")){
-            map.put("code","6");
+            map.put("code","5");
             map.put("msg","密码为空");
             return map;
         }
         if(password.length()!=6){
-            map.put("code","7");
+            map.put("code","6");
             map.put("msg","密码长度必须为6");
             return map;
         }

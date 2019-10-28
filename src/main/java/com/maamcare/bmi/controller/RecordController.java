@@ -96,7 +96,7 @@ public class RecordController {
                     .build();
         } catch (Exception e) {
             HashMap<String,String> errMap = new HashMap<>();
-            errMap.put("code","3");
+            errMap.put("code","-1");
             errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)
@@ -137,7 +137,7 @@ public class RecordController {
                     .build();
         } catch (Exception e) {
             HashMap<String,String> errMap = new HashMap<>();
-            errMap.put("code","3");
+            errMap.put("code","-1");
             errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)
