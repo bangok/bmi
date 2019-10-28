@@ -25,16 +25,18 @@ public class UserController {
 
     @GetMapping("/noLogin")
     public Result noLogin(HttpSession session){
-        Map<Integer,String> map = new HashMap();
-        map.put(0,"用户未登录");
+        Map<String,String> map = new HashMap();
+        map.put("code","1");
+        map.put("msg","用户未登录");
         return Result.builder().status(0).err(map).data(null).build();
     }
 
     @GetMapping("/getUserInfoById")
     public Result getUserInfoById(@RequestParam Integer id) throws Exception{
-        Map<Integer,String> checkmap= new HashMap<>();
+        Map<String,String> checkmap= new HashMap<>();
         if(id<0){
-            checkmap.put(1,"id不允许为负");
+            checkmap.put("code","1");
+            checkmap.put("msg","id不允许为负");
             return Result.builder()
                     .status(0)
                     .err(checkmap)
@@ -45,8 +47,9 @@ public class UserController {
         try {
             user = userService.getUserInfoById(id);
         } catch (Exception e) {
-            Map<Integer,String> errMap = new HashMap();
-            errMap.put(2,e.getMessage());
+            Map<String,String> errMap = new HashMap();
+            errMap.put("code","1");
+            errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)
                     .err(errMap)
@@ -62,11 +65,11 @@ public class UserController {
 
     @PostMapping("/login")
     public Result login(@RequestBody UserFormInfo userFormInfo, HttpSession session){
-        Map<Integer,String> map= new HashMap<>();
+        Map<String,String> map= new HashMap<>();
         map= testComponent.testLogin(userFormInfo.getUsername(),userFormInfo.getPassword());
         Integer userid = null;
         //校验数据合法性
-        if(map.get(0)==null){
+        if(!map.get("code").equals("0")){
             return Result.builder()
                     .status(0)
                     .err(map)
@@ -80,8 +83,9 @@ public class UserController {
                             .build());
         } catch (Exception e) {
             //登录失败
-            HashMap<Integer, String> errMap = new HashMap<>();
-            errMap.put(7,e.getMessage());
+            HashMap<String, String> errMap = new HashMap<>();
+            errMap.put("code","7");
+            errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)
                     .err(errMap)
@@ -94,17 +98,17 @@ public class UserController {
         resmap.put("userid",userid);
         return Result.builder()
                 .status(1)
-                .err(map)
+                .err(null)
                 .data(resmap)
                 .build();
     }
 
     @PostMapping("/register")
     public Result register(@RequestBody UserFormInfo userFormInfo,HttpSession session){
-        Map<Integer,String> map= new HashMap<>();
+        Map<String,String> map= new HashMap<>();
         map= testComponent.testRegister(userFormInfo.getUsername(),userFormInfo.getPassword(),userFormInfo.getHeight());
         //校验数据合法性
-        if(map.get(0)==null){
+        if(!map.get("code").equals("0")){
             return Result.builder()
                     .status(0)
                     .err(map)
@@ -120,8 +124,9 @@ public class UserController {
                                 .build());
         } catch (Exception e) {
             //注册失败
-            HashMap<Integer, String> errMap = new HashMap<>();
-            errMap.put(9,e.getMessage());
+            HashMap<String, String> errMap = new HashMap<>();
+            errMap.put("code","9");
+            errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)
                     .err(errMap)
@@ -135,7 +140,7 @@ public class UserController {
         resMap.put("userid",userid);
         return Result.builder()
                 .status(1)
-                .err(map)
+                .err(null)
                 .data(resMap)
                 .build();
 
@@ -143,9 +148,10 @@ public class UserController {
 
     @GetMapping("/updateHeight")
     public Result updateHeight(@RequestParam Integer id ,@RequestParam Integer height){
-        Map<Integer,String> checkMap= new HashMap<>();
+        Map<String,String> checkMap= new HashMap<>();
         if(height<0){
-            checkMap.put(1,"身高不允许为负数");
+            checkMap.put("code","1");
+            checkMap.put("code","身高不允许为负数");
             return  Result.builder()
                     .status(0)
                     .err(checkMap)
@@ -154,7 +160,8 @@ public class UserController {
         }
         boolean isSuc = userService.updateHeight(id,height);
         if(!isSuc){
-            checkMap.put(2,"更新身高失败");
+            checkMap.put("code","2");
+            checkMap.put("msg","更新身高失败");
             return  Result.builder()
                     .status(0)
                     .err(checkMap)
@@ -163,7 +170,7 @@ public class UserController {
         }
         return  Result.builder()
                 .status(1)
-                .err(checkMap)
+                .err(null)
                 .data(null)
                 .build();
 

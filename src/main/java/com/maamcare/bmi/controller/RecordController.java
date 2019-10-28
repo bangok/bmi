@@ -29,9 +29,10 @@ public class RecordController {
                                       @RequestParam  @DateTimeFormat(pattern="yyyy-MM-dd") Date startdate,
                                       @RequestParam  @DateTimeFormat(pattern="yyyy-MM-dd") Date enddate) {
         //数据校验
-        HashMap<Integer,String> checkMap = new HashMap<>();
+        HashMap<String,String> checkMap = new HashMap<>();
         if(userid<0){
-            checkMap.put(1,"用户id不允许为负");
+            checkMap.put("code","1");
+            checkMap.put("msg","用户id不允许为负");
             return Result.builder()
                     .status(0)
                     .err(checkMap)
@@ -39,7 +40,8 @@ public class RecordController {
                     .build();
         }
         if(startdate.getTime()>enddate.getTime()){
-            checkMap.put(2,"开始时间不能大于结束时间");
+            checkMap.put("code","2");
+            checkMap.put("msg","开始时间不能大于结束时间");
             return Result.builder()
                     .status(0)
                     .err(checkMap)
@@ -61,9 +63,10 @@ public class RecordController {
     public Result addRecord(@RequestParam  Integer userid,
                                       @RequestParam  Integer weight,
                                       @RequestParam  @DateTimeFormat(pattern="yyyy-MM-dd") Date record_date) {
-        HashMap<Integer,String> checkMap = new HashMap<>();
+        HashMap<String,String> checkMap = new HashMap<>();
         if(userid<0){
-            checkMap.put(1,"用户id不允许为负");
+            checkMap.put("code","1");
+            checkMap.put("msg","用户id不允许为负");
             return Result.builder()
                     .status(0)
                     .err(checkMap)
@@ -71,7 +74,8 @@ public class RecordController {
                     .build();
         }
         if(weight<0){
-            checkMap.put(2,"体重不允许为负");
+            checkMap.put("code","2");
+            checkMap.put("msg","体重不允许为负");
             return Result.builder()
                     .status(0)
                     .err(checkMap)
@@ -91,8 +95,9 @@ public class RecordController {
                     .data(null)
                     .build();
         } catch (Exception e) {
-            HashMap<Integer,String> errMap = new HashMap<>();
-            errMap.put(3,e.getMessage());
+            HashMap<String,String> errMap = new HashMap<>();
+            errMap.put("code","3");
+            errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)
                     .err(errMap)
@@ -105,9 +110,10 @@ public class RecordController {
     @GetMapping("/updateWeightById")
     public Result updateWeightById(@RequestParam  Integer id,
                                    @RequestParam  Integer weight) {
-        HashMap<Integer,String> checkMap = new HashMap<>();
+        HashMap<String,String> checkMap = new HashMap<>();
         if(id<0){
-            checkMap.put(1,"id不允许为负数");
+            checkMap.put("code","1");
+            checkMap.put("msg","id不允许为负数");
             return Result.builder()
                     .status(0)
                     .err(checkMap)
@@ -115,7 +121,8 @@ public class RecordController {
                     .build();
         }
         if(weight<0){
-            checkMap.put(2,"体重不允许为负数");
+            checkMap.put("code","2");
+            checkMap.put("msg","体重不允许为负数");
             return Result.builder()
                     .status(0)
                     .err(checkMap)
@@ -129,8 +136,9 @@ public class RecordController {
                     .data(recordService.updateWeightById(id,weight))
                     .build();
         } catch (Exception e) {
-            HashMap<Integer,String> errMap = new HashMap<>();
-            errMap.put(3,e.getMessage());
+            HashMap<String,String> errMap = new HashMap<>();
+            errMap.put("code","3");
+            errMap.put("msg",e.getMessage());
             return Result.builder()
                     .status(0)
                     .err(errMap)
