@@ -1,5 +1,6 @@
 package com.maamcare.bmi.component;
 
+import com.maamcare.bmi.vo.Result;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

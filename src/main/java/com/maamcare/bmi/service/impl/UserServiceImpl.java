@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    @Transactional(rollbackFor=Exception.class) //加入事务回滚，否则并发有同步BUG
+    @Transactional(rollbackFor=Exception.class)//开启事务注解，但是需要全局处理
     public Integer register(User user) throws Exception{
 
         String username = user.getUsername();

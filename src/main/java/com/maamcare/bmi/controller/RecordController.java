@@ -5,6 +5,7 @@ import com.maamcare.bmi.po.Record;
 import com.maamcare.bmi.pojo.TimeSlot;
 import com.maamcare.bmi.service.RecordService;
 import com.maamcare.bmi.vo.Result;
+import com.maamcare.bmi.vo.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,7 @@ public class RecordController {
         List<Record> recordList = recordService.getRecordbYTimeSlot(timeSlot);
         return Result.builder()
                 .status(1)
-                .err(null)
+                .err(ResultMap.getNullMap())
                 .data(recordList)
                 .build();
     }
@@ -91,7 +92,7 @@ public class RecordController {
             recordService.addRecord(record);
             return Result.builder()
                     .status(1)
-                    .err(null)
+                    .err(ResultMap.getNullMap())
                     .data(null)
                     .build();
         } catch (Exception e) {

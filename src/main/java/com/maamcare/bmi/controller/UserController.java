@@ -5,6 +5,7 @@ import com.maamcare.bmi.component.TestComponent;
 import com.maamcare.bmi.po.User;
 import com.maamcare.bmi.service.UserService;
 import com.maamcare.bmi.vo.Result;
+import com.maamcare.bmi.vo.ResultMap;
 import com.maamcare.bmi.vo.UserFormInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,6 @@ public class UserController {
     TestComponent testComponent;
 
     //@DateTimeFormat(pattern="yyyy-MM-dd")获取格式化日期数据
-
     @GetMapping("/noLogin")
     public Result noLogin(HttpSession session){
         Map<String,String> map = new HashMap();
@@ -58,7 +58,7 @@ public class UserController {
         }
         return Result.builder()
                 .status(1)
-                .err(null)
+                .err(ResultMap.getNullMap())
                 .data(user)
                 .build();
     }
@@ -98,7 +98,7 @@ public class UserController {
         resmap.put("userid",userid);
         return Result.builder()
                 .status(1)
-                .err(null)
+                .err(ResultMap.getNullMap())
                 .data(resmap)
                 .build();
     }
@@ -140,7 +140,7 @@ public class UserController {
         resMap.put("userid",userid);
         return Result.builder()
                 .status(1)
-                .err(null)
+                .err(ResultMap.getNullMap())
                 .data(resMap)
                 .build();
 
@@ -170,7 +170,7 @@ public class UserController {
         }
         return  Result.builder()
                 .status(1)
-                .err(null)
+                .err(ResultMap.getNullMap())
                 .data(null)
                 .build();
 
